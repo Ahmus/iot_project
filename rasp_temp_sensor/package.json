@@ -1,0 +1,17 @@
+{
+  "name": "iot-project-sensor",
+  "version": "1.0.0",
+  "description": "Collects object and ambient temperatures and sends them to Azure IoT Hub",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "azure-iot-device": "^1.9.3",
+    "azure-iot-device-mqtt": "^1.9.3",
+    "i2c-bus": "^5.2.1",
+    "mlx90614": "^0.1.7"
+  },
+  "author": "Rasmus Ryyppö",
+  "license": "MIT"
+}

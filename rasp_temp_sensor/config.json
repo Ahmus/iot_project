@@ -1,0 +1,11 @@
+{
+  "interval": 30000,
+  "deviceId": "Rasbian_Temp",
+  "temperatureAlert": 30,
+  "transport": "mqtt",
+  "i2cOption": {
+    "pin": 9,
+    "i2cBusNo": 1,
+    "i2cAddress": 90
+  }
+}
