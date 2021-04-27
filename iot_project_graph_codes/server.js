@@ -3,15 +3,18 @@ const http = require('http');
 const WebSocket = require('ws');
 const path = require('path');
 const EventHubReader = require('./scripts/event-hub-reader.js');
-const iotHubConnectionString = "HostName=TUNI-IoT-Project.azure-devices.net;SharedAccessKeyName=service;SharedAccessKey=7f2/fIKGh73LekYjZqnx1qT0NZtkhVYItP2EJOHK1sQ=";
+const eventHubsCompatibleEndpoint = "sb://ihsuproddbres014dednamespace.servicebus.windows.net/";
+const eventHubsCompatiblePath = "iothub-ehub-tuni-iot-p-8367644-2ae41b491c";
+const iotHubSasKey = "7f2/fIKGh73LekYjZqnx1qT0NZtkhVYItP2EJOHK1sQ=";
+const connectionString = `Endpoint=${eventHubsCompatibleEndpoint};EntityPath=${eventHubsCompatiblePath};SharedAccessKeyName=service;SharedAccessKey=${iotHubSasKey}`;
 
-if (!iotHubConnectionString) {
-  console.error(`Missing iotHubConnectionString`);
+if (!connectionString) {
+  console.error(`Missing connectionString`);
   return;
 }
-console.log(`Using IoT Hub connection string [${iotHubConnectionString}]`);
+console.log(`Using IoT Hub connection string [${connectionString}]`);
 
-const eventHubConsumerGroup = "consumergrouptest";
+const eventHubConsumerGroup = "$Default";
 console.log(eventHubConsumerGroup);
 if (!eventHubConsumerGroup) {
   console.error(`Missing EventHubConsumerGroup`);
@@ -45,7 +48,7 @@ server.listen(process.env.PORT || '3000', () => {
   console.log('Listening on %d.', server.address().port);
 });
 
-const eventHubReader = new EventHubReader(iotHubConnectionString, eventHubConsumerGroup);
+const eventHubReader = new EventHubReader(connectionString, eventHubConsumerGroup);
 
 (async () => {
   await eventHubReader.startReadMessage((message, date, deviceId) => {

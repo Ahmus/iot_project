@@ -11,10 +11,7 @@
   },
   "dependencies": {
     "@azure/event-hubs": ">=5.0.2",
-    "buffer": "^5.5.0",
-    "crypto": "^1.0.1",
     "express": ">=4.17.1",
-    "rhea-promise": "^1.0.0",
     "ws": ">=7.1.2"
   },
   "author": "Rasmus Ryyppö",

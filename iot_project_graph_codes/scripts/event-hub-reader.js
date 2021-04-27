@@ -1,5 +1,4 @@
 const { EventHubProducerClient, EventHubConsumerClient } = require('@azure/event-hubs');
-const { convertIotHubToEventHubsConnectionString } = require('./iot-hub-connection-string.js');
 
 class EventHubReader {
   constructor(iotHubConnectionString, consumerGroup) {
@@ -9,8 +8,9 @@ class EventHubReader {
 
   async startReadMessage(startReadMessageCallback) {
     try {
-      const eventHubConnectionString = await convertIotHubToEventHubsConnectionString(this.iotHubConnectionString);
-      const consumerClient = new EventHubConsumerClient(this.consumerGroup, eventHubConnectionString);
+      const clientOptions = {
+      };
+      const consumerClient = new EventHubConsumerClient(this.consumerGroup, this.iotHubConnectionString, clientOptions);
       console.log('Successfully created the EventHubConsumerClient.');
 
       const partitionIds = await consumerClient.getPartitionIds();
@@ -35,12 +35,6 @@ class EventHubReader {
   }
 
   async stopReadMessage() {
-    const disposeHandlers = [];
-    this.receiveHandlers.forEach((receiveHandler) => {
-      disposeHandlers.push(receiveHandler.stop());
-    });
-    await Promise.all(disposeHandlers);
-
     this.consumerClient.close();
   }
 }
